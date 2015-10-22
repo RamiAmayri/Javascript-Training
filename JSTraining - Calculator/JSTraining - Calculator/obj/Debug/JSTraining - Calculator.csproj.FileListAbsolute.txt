@@ -1,0 +1,20 @@
+C:\Users\ramarai\Documents\GitHub\Javascript-Training\JSTraining - Calculator\JSTraining - Calculator\bin\roslyn\csc.exe
+C:\Users\ramarai\Documents\GitHub\Javascript-Training\JSTraining - Calculator\JSTraining - Calculator\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\ramarai\Documents\GitHub\Javascript-Training\JSTraining - Calculator\JSTraining - Calculator\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\ramarai\Documents\GitHub\Javascript-Training\JSTraining - Calculator\JSTraining - Calculator\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\ramarai\Documents\GitHub\Javascript-Training\JSTraining - Calculator\JSTraining - Calculator\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\ramarai\Documents\GitHub\Javascript-Training\JSTraining - Calculator\JSTraining - Calculator\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\ramarai\Documents\GitHub\Javascript-Training\JSTraining - Calculator\JSTraining - Calculator\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\ramarai\Documents\GitHub\Javascript-Training\JSTraining - Calculator\JSTraining - Calculator\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\ramarai\Documents\GitHub\Javascript-Training\JSTraining - Calculator\JSTraining - Calculator\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\ramarai\Documents\GitHub\Javascript-Training\JSTraining - Calculator\JSTraining - Calculator\bin\roslyn\vbc.exe
+C:\Users\ramarai\Documents\GitHub\Javascript-Training\JSTraining - Calculator\JSTraining - Calculator\bin\roslyn\VBCSCompiler.exe
+C:\Users\ramarai\Documents\GitHub\Javascript-Training\JSTraining - Calculator\JSTraining - Calculator\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\ramarai\Documents\GitHub\Javascript-Training\JSTraining - Calculator\JSTraining - Calculator\bin\JSTraining - Calculator.dll.config
+C:\Users\ramarai\Documents\GitHub\Javascript-Training\JSTraining - Calculator\JSTraining - Calculator\bin\JSTraining - Calculator.dll
+C:\Users\ramarai\Documents\GitHub\Javascript-Training\JSTraining - Calculator\JSTraining - Calculator\bin\JSTraining - Calculator.pdb
+C:\Users\ramarai\Documents\GitHub\Javascript-Training\JSTraining - Calculator\JSTraining - Calculator\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\ramarai\Documents\GitHub\Javascript-Training\JSTraining - Calculator\JSTraining - Calculator\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\ramarai\Documents\GitHub\Javascript-Training\JSTraining - Calculator\JSTraining - Calculator\obj\Debug\JSTraining - Calculator.csprojResolveAssemblyReference.cache
+C:\Users\ramarai\Documents\GitHub\Javascript-Training\JSTraining - Calculator\JSTraining - Calculator\obj\Debug\JSTraining - Calculator.dll
+C:\Users\ramarai\Documents\GitHub\Javascript-Training\JSTraining - Calculator\JSTraining - Calculator\obj\Debug\JSTraining - Calculator.pdb

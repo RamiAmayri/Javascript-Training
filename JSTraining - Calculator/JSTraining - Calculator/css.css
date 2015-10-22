@@ -1,0 +1,35 @@
+﻿body {
+    margin: 0;
+    padding: 0;
+    font-size: 25px;
+}
+
+thead tr td {
+    background-color: #919092;
+    text-align: right;
+    color: white;
+    padding: 20px 10px 10px 0;
+}
+
+tbody tr td {
+    color: black;
+}
+
+tbody tr td button {
+    width: 100%;
+    height: 100%;
+    padding: 10px 25px 40px 25px;
+    background-color: #D7D6D7;
+    border: 0;
+    font-weight: bold;
+    font-size: 25px;
+}
+
+tbody tr td:last-child button {
+    color: white;
+    background-color: #F69241;
+}
+
+tbody tr:last-child td button {
+    text-align: left;
+}

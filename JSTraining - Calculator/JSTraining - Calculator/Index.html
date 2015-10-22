@@ -1,10 +1,51 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title></title>
+    <title>Calculator</title>
 	<meta charset="utf-8" />
+    <link href="css.css" rel="stylesheet" />
 </head>
 <body>
+    <div id="calculator" rel="js-calculator">
+        <table rel="js-content">
+            <thead rel="js-result">
+                <tr>
+                    <td rowspan="2" colspan="4"><span rel="js-result-text">0</span></td>
+                </tr>
+            </thead>
+            <tbody rel="js-buttons">
+                <tr>
+                    <td><button rel="js-button-action-clear">AC</button></td>
+                    <td><button rel="js-button-action-plusMinus">+/-</button></td>
+                    <td><button rel="js-button-action-percentage">%</button></td>
+                    <td><button rel="js-button-action-division">/</button></td>
+                </tr>
+                <tr>
+                    <td><button rel="js-button-number-7">7</button></td>
+                    <td><button rel="js-button-number-8">8</button></td>
+                    <td><button rel="js-button-number-9">9</button></td>
+                    <td><button rel="js-button-action-multiplication">x</button></td>
+                </tr>
+                <tr>
+                    <td><button rel="js-button-number-4">4</button></td>
+                    <td><button rel="js-button-number-5">5</button></td>
+                    <td><button rel="js-button-number-6">6</button></td>
+                    <td><button rel="js-button-action-substraction">-</button></td>
+                </tr>
+                <tr>
+                    <td><button rel="js-button-number-1">1</button></td>
+                    <td><button rel="js-button-number-2">2</button></td>
+                    <td><button rel="js-button-number-3">3</button></td>
+                    <td><button rel="js-button-action-addition">+</button></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><button rel="js-button-number-0">0</button></td>
+                    <td><button rel="js-button-action-derivative">.</button></td>
+                    <td><button rel="js-button-action-equality">=</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
     <script src="app.js"></script>
 </body>
