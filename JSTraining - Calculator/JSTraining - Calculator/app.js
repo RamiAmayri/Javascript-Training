@@ -1,108 +1,25 @@
-﻿// Using module pattern for encapsulation, note: I have given name to the function (Calculator) just so I can reference it if I want to.
-var Calculator = (function Calculator() {
-    var currentNumber, previousNumber, currentAction, action_clear = "clear", action_division = "divison", action_multiplication = "multiplication",
-        action_substraction = "substraction", action_addition = "addition", action_equality = "equality", action_derivative = "derivative";
+var Calculator = (function Calculator(){
+    var leftNumber, rightNumber, action, justExecuted, actionSymbols = {
+        percentage: "%",
+        divide: "/",
+        multiply: "*",
+        substract: "-",
+        add: "+"
+    };
 
-    function derivate() {
-        currentAction = action_derivative;
-    }
+    function haveAction() { return action != null }
+    function haveRightNumber() { return rightNumber != null }
 
-    function clear() {
-        currentNumber = null;
-        previousNumber = null;
-        currentAction = null;
-    }
-
-    function divide(number) {
-        if (number) {
-            currentNumber = currentNumber / number;
-        } else {
-            var currentNumberTemp = currentNumber;
-            currentNumber = previousNumber / currentNumber;
-            previousNumber = currentNumberTemp;
-        }
-    }
-
-    function multiply(number) {
-        if (number) {
-            currentNumber = currentNumber * number;
-        } else {
-            var currentNumberTemp = currentNumber;
-            currentNumber = previousNumber * currentNumber;
-            previousNumber = currentNumberTemp;
-        }
-    }
-
-    function substract(number) {
-        if (number) {
-            currentNumber = currentNumber - number;
-        } else {
-            var currentNumberTemp = currentNumber;
-            currentNumber = previousNumber - currentNumber;
-            previousNumber = currentNumberTemp;
-        }
-    }
-
-    function add(number) {
-        if (number) {
-            currentNumber = currentNumber + number;
-        } else {
-            var currentNumberTemp = currentNumber;
-            currentNumber = previousNumber + currentNumber;
-            previousNumber = currentNumberTemp;
-        }
-    }
-
-    function handleActionClicked(action) {
-        if (currentAction != null) {
-            equate();
-            currentAction = null;
-        } else {
-            currentAction = action;
-        }
-    }
-
-    function handleNumberClicked(number) {
-        if (currentAction == null) {
-            currentNumber == null ? currentNumber = number : currentNumber = parseInt(((currentNumber + "") + (number + "")))
-            
-        } else {
-            equate(number);
+    function updateContent(content) {
+        var content = leftNumber + "";
+        if (haveAction()) {
+            content += " " + actionSymbols[action];
         }
 
-        updateResult(currentNumber);
-    }
-
-    function equate(number) {
-        switch (currentAction) {
-            case action_division:
-                divide(number);
-                break;
-            case action_multiplication:
-                multiply(number);
-                break;
-            case action_substraction:
-                substract(number);
-                break;
-            case action_addition:
-                add(number);
-                break;
-            case action_clear:
-                clear();
-                break;
-            case action_equality:
-                execute();
-                break;
-            case action_derivative:
-                derivate();
-                break;
-            default: throw new Error("Invalid action");
+        if (haveRightNumber()) {
+            content += " " + rightNumber;
         }
 
-        currentAction = null;
-    }
-
-    function updateResult(content) {
         document.querySelectorAll("[rel='js-result-text']")[0].textContent = content;
     }
 
@@ -115,24 +32,90 @@ var Calculator = (function Calculator() {
         var relParts = rel.split("-");
 
         if (rel.indexOf("js-button-action") != -1) {
-            handleActionClicked(relParts[relParts.length - 1]); // passing the action - which is the last part of the relParts array
+            setAction(relParts[relParts.length - 1]); // passing the action - which is the last part of the relParts array
         } else if (rel.indexOf("js-button-number") != -1) {
-            handleNumberClicked(parseInt(relParts[relParts.length - 1], 10));  // passing the number - which is the last part of the relParts array
+            setNumber(parseInt(relParts[relParts.length - 1], 10));  // passing the number - which is the last part of the relParts array
         } else {
             throw new Error("Invalid button");
         }
-    }
 
-    function init(evt) { // evt here is DOMContentLoaded event
-        currentNumber = null;
-        previousNumber = null;
-        currentAction = null;
-        document.querySelectorAll("[rel='js-buttons']")[0].addEventListener("click", onButtonClick, false)
+        updateContent();
     }
+	
+	function initVariables(){
+	    leftNumber = 0, rightNumber = null, action = null, justExecuted = true;
+	}
+	
+	function execute(){
+	    switch (action) {
+	        case "percentage":
+	            leftNumber %= rightNumber;
+	            break;
+	        case "divide":
+	            leftNumber /= rightNumber;
+	            break;
+			case "multiply": 
+				leftNumber *= rightNumber;
+				break;
+			case "substract":
+				leftNumber -= rightNumber;
+				break;
+			case "add":
+				leftNumber += rightNumber;
+		}
+		
+	    rightNumber = null, action = null, justExecuted = true;
+	}
+	
+	function setNumber(number){
+	    // think about int maxnumber validation
+	    if (haveAction()) {
+	        rightNumber == null ? rightNumber = 0 : rightNumber = rightNumber;
+	        rightNumber = parseInt((rightNumber + "") + (number + ""));
+	    } else {
+	        if (justExecuted) {
+	            justExecuted = false;
+	            leftNumber = number;
+	        } else {
+	            leftNumber = parseInt((leftNumber + "") + (number + ""));
+	        }
+	    }
+	}
+	
+	function setAction(act) {
+	    if (act == "derivate") {
+	        throw new Error("Not implemented yet.");
+	    } else if (act == "clear") {
+	        initVariables();
+        } else if (act == "execute") {
+		    execute();
+        } else if (act == "plusMinus") {
+            if (haveRightNumber()) {
+                rightNumber *= -1;
+            } else {
+                leftNumber *= -1;
+            }
+        } else {
+            if (haveAction() && haveRightNumber()) {
+			    execute();
+			} 
+			
+			action = act;
+		}
+	}
 
-    return {
-        init: init
-    }
+	function init() {
+	    initVariables(); // initialziing local variables
+		document.querySelectorAll("[rel='js-buttons']")[0].addEventListener("click", onButtonClick, false); // initializing html bindings
+	}
+	
+	return {
+	    init: init,
+        // setNumber, setAction and execute can also be hidden. They are exposed here for testing purposes.
+		setNumber: setNumber,
+		setAction: setAction,
+		execute: execute
+	}
 })();
 
 // Making sure the DOM is loaded before initializing our code. Directly passing the init function of the main module.
