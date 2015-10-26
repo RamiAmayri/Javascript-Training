@@ -11,15 +11,9 @@ var Calculator = (function Calculator(){
     function haveRightNumber() { return rightNumber != null }
 
     function updateContent(content) {
-        var content = leftNumber + "";
-        if (haveAction()) {
-            content += " " + actionSymbols[action];
-        }
-
-        if (haveRightNumber()) {
-            content += " " + rightNumber;
-        }
-
+        var content = leftNumber;
+        haveAction() ? content += " " + actionSymbols[action] : "";
+        haveRightNumber() ? content += " " + rightNumber : "";
         document.querySelectorAll("[rel='js-result-text']")[0].textContent = content;
     }
 
@@ -74,8 +68,7 @@ var Calculator = (function Calculator(){
 	        rightNumber = parseInt((rightNumber + "") + (number + ""));
 	    } else {
 	        if (justExecuted) {
-	            justExecuted = false;
-	            leftNumber = number;
+	            justExecuted = false, leftNumber = number;
 	        } else {
 	            leftNumber = parseInt((leftNumber + "") + (number + ""));
 	        }
@@ -90,16 +83,9 @@ var Calculator = (function Calculator(){
         } else if (act == "execute") {
 		    execute();
         } else if (act == "plusMinus") {
-            if (haveRightNumber()) {
-                rightNumber *= -1;
-            } else {
-                leftNumber *= -1;
-            }
+            haveRightNumber() ? rightNumber *= -1 : leftNumber *= -1;
         } else {
-            if (haveAction() && haveRightNumber()) {
-			    execute();
-			} 
-			
+            haveAction() && haveRightNumber() ? execute() : "";
 			action = act;
 		}
 	}
