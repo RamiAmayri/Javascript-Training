@@ -1,5 +1,5 @@
-var Calculator = (function Calculator(){
-    var leftNumber, rightNumber, action, justExecuted, actionSymbols = {
+var Calculator = (function Calculator() {
+    var leftNumber, rightNumber, action, justExecuted, derivate, actionSymbols = {
         percentage: "%",
         divide: "/",
         multiply: "*",
@@ -9,11 +9,14 @@ var Calculator = (function Calculator(){
 
     function haveAction() { return action != null }
     function haveRightNumber() { return rightNumber != null }
+    function initVariables() { leftNumber = 0, rightNumber = null, action = null, justExecuted = false, derivate = false }
 
     function updateContent(content) {
         var content = leftNumber;
+        derivate && !haveRightNumber() && Number.isInteger(leftNumber) ? content += "." : "";
         haveAction() ? content += " " + actionSymbols[action] : "";
         haveRightNumber() ? content += " " + rightNumber : "";
+        derivate && haveRightNumber() && Number.isInteger(rightNumber) ? content += "." : "";
         document.querySelectorAll("[rel='js-result-text']")[0].textContent = content;
     }
 
@@ -35,11 +38,7 @@ var Calculator = (function Calculator(){
 
         updateContent();
     }
-	
-	function initVariables(){
-	    leftNumber = 0, rightNumber = null, action = null, justExecuted = true;
-	}
-	
+	  
 	function execute(){
 	    switch (action) {
 	        case "percentage":
@@ -58,26 +57,33 @@ var Calculator = (function Calculator(){
 				leftNumber += rightNumber;
 		}
 		
-	    rightNumber = null, action = null, justExecuted = true;
+	    rightNumber = null, action = null, justExecuted = true, derivate = false;
 	}
 	
 	function setNumber(number){
-	    // think about int maxnumber validation
 	    if (haveAction()) {
-	        rightNumber == null ? rightNumber = 0 : rightNumber = rightNumber;
-	        rightNumber = parseInt((rightNumber + "") + (number + ""));
+	        rightNumber = rightNumber || 0;
+	        if (derivate) {
+	            Number.isInteger(rightNumber) ? rightNumber = parseFloat((rightNumber + ".") + (number + "")) : rightNumber = parseFloat((rightNumber + "") + (number + ""));
+	        } else {
+	            rightNumber = parseInt((rightNumber + "") + (number + ""));
+	        }
 	    } else {
 	        if (justExecuted) {
 	            justExecuted = false, leftNumber = number;
 	        } else {
-	            leftNumber = parseInt((leftNumber + "") + (number + ""));
+	            if (derivate) {
+	                Number.isInteger(leftNumber) ? leftNumber = parseFloat((leftNumber + ".") + (number + "")) : leftNumber = parseFloat((leftNumber + "") + (number + ""));
+	            } else {
+	                leftNumber = parseInt((leftNumber + "") + (number + ""));
+	            }
 	        }
 	    }
 	}
 	
 	function setAction(act) {
 	    if (act == "derivate") {
-	        throw new Error("Not implemented yet.");
+	        derivate = true;
 	    } else if (act == "clear") {
 	        initVariables();
         } else if (act == "execute") {
@@ -86,7 +92,7 @@ var Calculator = (function Calculator(){
             haveRightNumber() ? rightNumber *= -1 : leftNumber *= -1;
         } else {
             haveAction() && haveRightNumber() ? execute() : "";
-			action = act;
+			action = act, derivate = false;
 		}
 	}
 
@@ -97,10 +103,10 @@ var Calculator = (function Calculator(){
 	
 	return {
 	    init: init,
-        // setNumber, setAction and execute can also be hidden. They are exposed here for testing purposes.
-		setNumber: setNumber,
-		setAction: setAction,
-		execute: execute
+        // setNumber, setAction and execute can also be exposed and tested within the javascript code with unit tests.
+		//setNumber: setNumber,
+		//setAction: setAction,
+		//execute: execute
 	}
 })();
 
