@@ -17,7 +17,7 @@ var Calculator = (function Calculator() {
         haveAction() ? content += " " + actionSymbols[action] : "";
         haveRightNumber() ? content += " " + rightNumber : "";
         derivate && haveRightNumber() && Number.isInteger(rightNumber) ? content += "." : "";
-        document.querySelectorAll("[rel='js-result-text']")[0].textContent = content;
+        document.querySelector("[rel='js-result-text']").textContent = content;
     }
 
     function onButtonClick(evt) {
@@ -98,7 +98,7 @@ var Calculator = (function Calculator() {
 
 	function init() {
 	    initVariables(); // initialziing local variables
-		document.querySelectorAll("[rel='js-buttons']")[0].addEventListener("click", onButtonClick, false); // initializing html bindings
+		document.querySelector("[rel='js-buttons']").addEventListener("click", onButtonClick, false); // initializing html bindings
 	}
 	
 	return {
