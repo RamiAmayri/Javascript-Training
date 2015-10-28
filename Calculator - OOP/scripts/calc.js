@@ -78,7 +78,7 @@ Calculator.prototype.parseNumber = function (numberOne, numberTwo, numberType, n
 
 Calculator.prototype.executeAction = function () {
     switch (this.action) {
-        case "percentage":
+        case "percent":
             this.leftNumber %= this.rightNumber;
             break;
         case "divide":
@@ -92,6 +92,8 @@ Calculator.prototype.executeAction = function () {
             break;
         case "add":
             this.leftNumber += this.rightNumber;
+        default: throw new Error("Invalid action");
+            break;
     }
 
     this.initVariables(this.leftNumber, null, null, true, false);
