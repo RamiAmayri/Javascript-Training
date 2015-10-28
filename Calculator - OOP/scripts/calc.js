@@ -27,7 +27,7 @@ Calculator.prototype.handleActionButtonClick = function (action) {
     if (action == "derivate") {
         this.derivate = true;
     } else if (action == "clear") {
-        this.initVariables();
+        this.initVariables(0, null, null, false, false);
     } else if (action == "execute") {
         this.executeAction();
     } else if (action == "plusMinus") {
@@ -94,14 +94,14 @@ Calculator.prototype.executeAction = function () {
             this.leftNumber += this.rightNumber;
     }
 
-    this.rightNumber = null, this.action = null, this.justExecuted = true, this.derivate = false;
+    this.initVariables(this.leftNumber, null, null, true, false);
 };
 
-Calculator.prototype.init = function () { this.initVariables(), this.initButtons(); };
+Calculator.prototype.init = function () { this.initVariables(0, null, null, false, false), this.initButtons(); };
     
-Calculator.prototype.initVariables = function () {
-    this.leftNumber = 0, this.rightNumber = null, this.action = null,
-        this.justExecuted = false, this.derivate = false;
+Calculator.prototype.initVariables = function (leftNumber, rightNumber, action, justExecuted, derivate) {
+    this.leftNumber = leftNumber, this.rightNumber = rightNumber, this.action = action,
+        this.justExecuted = justExecuted, this.derivate = derivate;
 };
 
 Calculator.prototype.initButtons = function () { this.initNumberButtons(), this.initActionButtons(); };
