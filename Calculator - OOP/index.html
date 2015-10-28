@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Calculator - OOP</title>
+	<meta charset="utf-8" />
+    <link href="styles/bootstrap.css" rel="stylesheet" />
+    <link href="styles/css.css" rel="stylesheet" />
+</head>
+<body>
+    <div id="wrapper" rel="js-calculator" class="container">
+        <table class="table table-bordered" rel="js-content">
+            <thead rel="js-content-result">
+                <tr>
+                    <td rowspan="2" colspan="4" class="success text-right"><span rel="js-content-result-text">0</span></td>
+                </tr>
+            </thead>
+            <tbody rel="js-content-buttons">
+                <tr>
+                    <td class="btn-primary text-center" rel="js-content-button-action-clear"><span>AC</span></td>
+                    <td class="btn-primary text-center" rel="js-content-button-action-plusMinus"><span>+/-</span></td>
+                    <td class="btn-primary text-center" rel="js-content-button-action-percent"><span>%</span></td>
+                    <td class="btn-warning text-center" rel="js-content-button-action-divide"><span>/</span></td>
+                </tr>
+                <tr>
+                    <td class="btn-primary text-center" rel="js-content-button-number-7"><span>7</span></td>
+                    <td class="btn-primary text-center" rel="js-content-button-number-8"><span>8</span></td>
+                    <td class="btn-primary text-center" rel="js-content-button-number-9"><span>9</span></td>
+                    <td class="btn-warning text-center" rel="js-content-button-action-multiply"><span>x</span></td>
+                </tr>
+                <tr>
+                    <td class="btn-primary text-center" rel="js-content-button-number-4"><span>4</span></td>
+                    <td class="btn-primary text-center" rel="js-content-button-number-5"><span>5</span></td>
+                    <td class="btn-primary text-center" rel="js-content-button-number-6"><span>6</span></td>
+                    <td class="btn-warning text-center" rel="js-content-button-action-substract"><span>-</span></td>
+                </tr>
+                <tr>
+                    <td class="btn-primary text-center" rel="js-content-button-number-1"><span>1</span></td>
+                    <td class="btn-primary text-center" rel="js-content-button-number-2"><span>2</span></td>
+                    <td class="btn-primary text-center" rel="js-content-button-number-3"><span>3</span></td>
+                    <td class="btn-warning text-center" rel="js-content-button-action-add"><span>+</span></td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="btn-primary text-left" rel="js-content-button-number-0"><span>0</span></td>
+                    <td class="btn-primary text-center" rel="js-content-button-action-derivate"><span>.</span></td>
+                    <td class="btn-warning text-center" rel="js-content-button-action-execute"><span>=</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script src="scripts/pubSub.js"></script>
+    <script src="scripts/button.js"></script>
+    <script src="scripts/numberButton.js"></script>
+    <script src="scripts/actionButton.js"></script>
+    <script src="scripts/calc.js"></script>
+    <script src="scripts/app.js"></script>
+</body>
+</html>
