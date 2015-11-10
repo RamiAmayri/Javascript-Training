@@ -1,6 +1,6 @@
 ﻿module.exports = function (grunt) {
     var express = require('express');
-
+    
     grunt.registerTask('server', 'Static file development server', function () {
         var app, webPort, webRoot;
 

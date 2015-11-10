@@ -53,10 +53,18 @@
         server: {
             base: '<%= files.dist %>',
             web: {
-                port: 1337
+                port: '<%= files.port %>'
             }
         },
+        openBrowser: {
+          baseUrl: '<%= files.web.baseUrl %>',
+          port: '<%= files.web.port %>'
+        },
         files: {
+            web: {
+              baseUrl: 'localhost',
+              port: 1337  
+            },
             dist: 'dist/',
             scripts: {
                 dest: '<%= files.dist %>' + 'scripts/',
@@ -88,5 +96,5 @@
     grunt.loadNpmTasks('grunt-browserify');
     
     
-    grunt.registerTask('default', ['clean:main', 'copy', 'browserify', 'server', 'watch'])
+    grunt.registerTask('default', ['clean:main', 'copy', 'browserify', 'server', 'openBrowser', 'watch'])
 }
