@@ -1,4 +1,4 @@
-import Calculator from './viewActionCreator.js';
+import Calculator from './components/calculator.js';
 
 var React = require('react');
 var ReactDOM = require('react-dom');
@@ -10,6 +10,5 @@ var buttons = [
 	{ value: 1 }, { value: 2 }, { value: 3 }, { value: '+' },
 	{ value: 0 }, { value: '.' }, { value: '=' }
 ];
-
 
 ReactDOM.render(<Calculator buttons={buttons} />, document.getElementById('wrapper'));

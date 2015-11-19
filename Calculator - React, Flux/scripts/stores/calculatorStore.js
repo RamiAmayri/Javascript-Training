@@ -1,17 +1,15 @@
-import constants from './constants.js';
-import Dashboard from './dashboard.js';
+import AppDispatcher from '../appDispatcher.js';
+import ActionTypes from '../constants/actionTypes.js';
 
-var React = require('react');
-var {EventEmitter} = require('fbemitter');
-var eventEmitter = new EventEmitter();
+var EventEmitter = require('events').EventEmitter;
+var CHANGE_EVENT = 'change';
 
-var Store = (function () {
-    eventEmitter.addListener(constants.Button_Clicked, buttonClicked);
+var CalculatorStore = (function () {
     var _leftNumber, _rightNumber, _action, _justExecuted, _derivate, 
-    	_immediateActions = ['derivate', 'clear', 'execute', 'plusMinus'],
-    	_actions = ['percent', 'divide', 'multiply', 'substract', 'add'],
-    	_numberTypes = Object.freeze({ 0: "integer", 1: "float" }),
-    	_actionSymbols = Object.freeze({
+        _immediateActions = ['derivate', 'clear', 'execute', 'plusMinus'],
+        _actions = ['percent', 'divide', 'multiply', 'substract', 'add'],
+        _numberTypes = Object.freeze({ 0: "integer", 1: "float" }),
+        _actionSymbols = Object.freeze({
             '%': '%',
             '/': '/',
             'x': '*',
@@ -19,23 +17,22 @@ var Store = (function () {
             '+': '+'
         }),
         _symbolsToActions = Object.freeze({
-        	'%': _actions[0],
+            '%': _actions[0],
             '/': _actions[1],
             'x': _actions[2],
             '-': _actions[3],
             '+': _actions[4]
         }),
         _symbolsToImmediateActions = Object.freeze({
-        	'.': _immediateActions[0],
-        	'AC': _immediateActions[1],
-        	'=': _immediateActions[2],
-        	'+/-': _immediateActions[3]
+            '.': _immediateActions[0],
+            'AC': _immediateActions[1],
+            '=': _immediateActions[2],
+            '+/-': _immediateActions[3]
         });
 
-    	
     initVariables();
 
-    function generateResult () {
+    function getResult () {
         let _result = _leftNumber;
         let _haveRightNumber = haveRightNumber();
         
@@ -44,14 +41,12 @@ var Store = (function () {
         _haveRightNumber ? _result += " " + _rightNumber : "";
         _derivate && _haveRightNumber && Number.isInteger(_rightNumber) ? _result += "." : "";
         
-        return _result;
+        return { result: _result };
     }
 
-    function buttonClicked (obj) {
+    function handleButtonClicked (obj) {
         let _value = obj.value;
         isNaN(_value) ? handleActionClick(_value) : handleNumberClick(_value);
-        let _result = generateResult();
-        eventEmitter.emit(constants.Result_Generated, { _result });
     }
 
     function handleActionClick (action) {
@@ -91,7 +86,7 @@ var Store = (function () {
                 initVariables();
                 break;
             case 'execute':
-               	shouldExecuteAction() ? executeAction() : '';
+                shouldExecuteAction() ? executeAction() : '';
                 break;
             case 'plusMinus':
                 haveRightNumber() ? _rightNumber *= -1 : _leftNumber *= -1;
@@ -155,56 +150,32 @@ var Store = (function () {
     function haveRightNumber () { return _rightNumber != null; }
     
     function haveAction () { return _action != null; }
+
+    return {
+    	getResult: getResult,
+    	handleButtonClicked: handleButtonClicked,
+    	addChangeListener: function (callback) {
+    		this.on(CHANGE_EVENT, callback);
+    	},
+    	removeChangeListener: function (callback) {
+    		this.removeListener(CHANGE_EVENT, callback);
+    	},
+    	emitChange: function () {
+    		this.emit(CHANGE_EVENT);
+    	}
+    };
 })();
 
-var ViewActionCreator = {
-	handleButtonClick: function (value) {
-		var listeners = eventEmitter.listeners(constants.Button_Clicked);
-		eventEmitter.emit(constants.Button_Clicked, { value })
+Object.assign(CalculatorStore, EventEmitter.prototype);
+
+AppDispatcher.register(function (payload) {
+	let actionType = payload.actionType;
+	switch (actionType) {
+		case ActionTypes.BUTTON_CLICK: 
+			CalculatorStore.handleButtonClicked({ value: payload.value });
+			CalculatorStore.emitChange();
+			break;
 	}
-};
+}); 
 
-export default class Calculator extends React.Component {
-	constructor (props) {
-		super(props);
-		this.state = { result: 0 };
-		eventEmitter.addListener(constants.Result_Generated, this.onResultGenerated.bind(this));
-	} 
-
-	onButtonClick (value) {
-		ViewActionCreator.handleButtonClick(value);
-	}
-
-	onResultGenerated (obj) {
-		this.setState({result: obj._result});
-	}
-
-	render () {
-		let buttons = this.props.buttons;
-		let rows = [];
-		let cells = [];
-
-		for (let i = 0; i < buttons.length; i += 4) {
-			cells = buttons.slice(i, i + 4).map((btn, index) => {
-				return (<td key={btn.value}><button onClick={this.onButtonClick.bind(this, btn.value)}>{btn.value}</button></td>);
-			});
-
-			rows.push(<tr key={i}>{cells}</tr>);	
-		}
-
-		return (
-			<div>
-				<table>
-					<Dashboard result={this.state.result} />
-					<tbody>
-						{rows}
-					</tbody>
-				</table>
-			</div>
-		);
-	}
-}
-
-Calculator.propTypes = { buttons: React.PropTypes.array };
-
-export { Calculator as default };
+export { CalculatorStore as default };

@@ -20,6 +20,12 @@ module.exports = function (grunt) {
 				}
 			}
 		},
+		eslint: {
+			options: {
+				configFile: '.eslintsrc.json'
+			},
+			target: ['<%= files.scripts.src %>']
+		},
 		copy: {
 			indexHTML: {
 				files: {
@@ -59,7 +65,7 @@ module.exports = function (grunt) {
 			dist: 'dist/',
 			indexHTML: 'index.html',
 			scripts: {
-				src: 'scripts/**.js',
+				src: 'scripts/**/*.js',
 				dest: 'dist/scripts/',
 				bundle: '<%= files.scripts.dest %>' + 'bundle.js'
 			}
@@ -76,6 +82,7 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-contrib-connect');
+	grunt.loadNpmTasks('grunt-eslint');
 	
-	grunt.registerTask('default', ['clean', 'browserify', 'copy', 'connect', 'watch']);
+	grunt.registerTask('default', ['clean', 'eslint', 'browserify', 'copy', 'connect', 'watch']);
 };
